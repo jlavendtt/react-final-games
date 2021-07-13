@@ -1,0 +1,29 @@
+.bg-myRed{
+  background-color: crimson;
+}
+
+.content{
+  margin-top: 40px;
+  padding: 12px;
+  height: 3000px;
+}
+.searchSpacing {
+  margin-left: 25px;
+  
+}
+
+.searchWidth {
+  width: 400px;
+}
+
+.btn-spacing {
+  margin-left: 5px;
+}
+
+.nav-profile-spacing {
+  margin-left: 250px;
+}
+
+.nav-popular-spacing {
+  margin-left: 150px;
+}
