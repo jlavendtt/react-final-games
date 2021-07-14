@@ -3,15 +3,23 @@ import 'bootstrap/dist/css/bootstrap.css'
 import {Nav, Navbar, NavDropdown} from 'react-bootstrap'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import {Link} from 'react-router-dom'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, createContext} from 'react'
 import SignIn from './components/SignIn'
 import Profile from './components/Profile'
 import Home from './components/Home'
 import Game from './components/Game';
 import SingleGame from './components/SingleGame';
 import SingleUser from './components/SingleUser';
+import UserRegister from './components/UserRegister';
+import UserLogin from './components/UserLogin';
+import React from 'react';
+
+const userContext = React.createContext('token');
 
 function App() {
+
+
+  const [token, setToken] = useState(null);
 
 
   const [globalUser, setGlobalUser] = useState([])
@@ -28,24 +36,25 @@ function App() {
 
   const [searchTerm, setSearchTerm] = useState('')
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const getGames = async () => {
+  //   const getGames = async () => {
 
-      const gamesFromServer = await fetchGames();
-      setGames(gamesFromServer)
-      const usersFromServer = await fetchUsers();
-      setUsers(usersFromServer);
-      const jesse = await fetchUser(1002)
-      setGlobalUser(jesse)
-      console.log("How many times is this being called?")
-    }
+  //     const gamesFromServer = await fetchGames();
+  //     setGames(gamesFromServer)
+  //     const usersFromServer = await fetchUsers();
+  //     setUsers(usersFromServer);
+  //     const jesse = await fetchUser(1002)
+  //     var today = new Date();
+  //     console.log(today)
+  //    setGlobalUser(jesse)
+  //   }
 
-    getGames()
+  //   getGames()
 
     
 
-  }, [])
+  // }, [])
 
   const fetchUsers = async () => {
     const res = await fetch('https://localhost:44305/User')
@@ -55,8 +64,26 @@ function App() {
     return data;
   }
 
+  const signOut = () => {
+    document.cookie += '; Max-Age=0'
+    console.log('signout called')
+    console.log(document.cookie)
+  }
+
+
+
+  const signOutUser = async (something) => {
+
+    console.log("signout was clicked")
+
+}
+
   const fetchGames = async () => {
-    const res = await fetch('https://localhost:44305/Game')
+    const res = await fetch('https://localhost:44305/Game',{
+    headers: {
+     'Authorization': `Bearer ${document.cookie}`,
+    }
+  })
 
     const data = await res.json();
 
@@ -112,13 +139,6 @@ function App() {
     
     }
 
-    const fetchUser = async (id) => {
-      const res = await fetch(`https://localhost:44305/User/${id}`)
-  
-      const data = await res.json();
-      return data;
-    }
-
     
 
   const selectUser = (user) => {
@@ -170,9 +190,7 @@ function App() {
     reloadUser(user.id)
   }
 
-  const signOut = () => {
-    setUser(null);
-  }
+  
 
   const reloadUser = async (id) => {
     const res = await fetch(`https://localhost:44305/User/${id}`)
@@ -198,19 +216,39 @@ function App() {
     
     <div className="App">
       <Router> 
-    <Route
+    {/* <Route
      path='/signin'
      exact
      render={(props) => (
        <>
         <SignIn
-        chooseUser = {selectUser}
-        addUser = {addUser}
-        users = {users}/>
+        getToken = {getToken}/>
 
        </>
      )}
-     />
+     /> */}
+     <Route path='/register' 
+        exact
+        render={(props) => (
+          <>
+            <UserRegister
+              
+              
+            />
+          </>
+        )}
+      />
+      <Route path='/login' 
+        exact
+        render={(props) => (
+          <>
+            <UserLogin
+              setToken = {setToken}
+              token = {token}
+            />
+          </>
+        )}
+      />
      {/* <Route
      path='/game/:id'
      exact
@@ -240,6 +278,7 @@ function App() {
           <>
             <Profile
               user = {globalUser}
+              token = {token}
             />
           </>
         )}
@@ -283,7 +322,7 @@ function App() {
             <NavDropdown.Item href = "products/tea">WishList</NavDropdown.Item>
             <NavDropdown.Item href = "products/tea">Started</NavDropdown.Item>
             <NavDropdown.Item href = "products/tea">Beaten</NavDropdown.Item>
-            
+            <NavDropdown.Item onClick={signOut}  >Signout</NavDropdown.Item>
           </NavDropdown>
           <Navbar.Brand>
           Logo (Picture)

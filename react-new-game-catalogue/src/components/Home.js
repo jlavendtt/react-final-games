@@ -7,7 +7,7 @@ const Home = ({games, user, onSubmit, editReview}) => {
         <>
         <br></br>
         <br></br>
-        <h1>Home</h1>
+        
         <Games 
             games = {games}
             user = {user}
