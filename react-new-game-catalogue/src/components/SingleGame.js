@@ -16,7 +16,12 @@ import GameRatings from './GameRatings'
     let id = splitUrl[splitUrl.length-1];
     
         const fetchGame = async (id) => {
-        const res = await fetch(`https://localhost:44305/Game/${id}`)
+          const parsed = JSON.parse(document.cookie);
+        const res = await fetch(`https://localhost:44305/Game/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${parsed.token}`,
+           }
+        })
     
         const data = await res.json();
     
@@ -46,6 +51,11 @@ import GameRatings from './GameRatings'
         <br></br>
        
          {this.state.game ?<h1>{this.state.game.name}</h1> : ''}
+         <br></br>
+            <img className='img'
+      src={this.state.game.pic}
+      alt="new"
+      />
          <h1>Picture of game and average score of game along with genres hopefully</h1>
          <GameRatings ratings = {this.state.game.ratings} user = {this.state.user}/>
       </div>

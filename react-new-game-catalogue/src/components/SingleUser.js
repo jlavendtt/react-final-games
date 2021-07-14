@@ -15,9 +15,13 @@ export default class SingleUser extends Component {
     componentDidMount() {
         let splitUrl = this.state.url.split('/')
         let id = splitUrl[splitUrl.length-1];
-        
+        const parsed = JSON.parse(document.cookie);
             const fetchUser = async (id) => {
-            const res = await fetch(`https://localhost:44305/User/${id}`)
+            const res = await fetch(`https://localhost:44305/UserById/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${parsed.token}`,
+                   }
+            })
         
             const data = await res.json();
         

@@ -3,8 +3,10 @@ import Game from './Game'
 
 const Games = ({games, user, onSubmit, editReview}) => {
     return (
-        <div>
+        <div className = "container">
+        
             {games.map(game=> <Game game = {game} editReview = {editReview} onSubmit = {onSubmit} key = {game.id} user = {user}/>)}
+        
         </div>
     )
 }

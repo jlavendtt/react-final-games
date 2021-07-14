@@ -30,11 +30,18 @@ const Game = ({game, user, onSubmit, editReview}) => {
     }
 
     return (
-        <>
+        <Link style={{textDecoration: 'none'}} to ={"/game/"+game.id}>
+        <div className="card">
         
-            <Link to ={"/game/"+game.id}>{game.name}</Link>
-            
-            {!showAdd && user && !hasReview() ? <button onClick={toggleShowAdd}>add review</button> : ''}
+           <span className="gameTitle">{game.name}</span> 
+            <br></br>
+            <img className='img'
+      src={game.pic}
+      alt="new"
+      />
+        
+             
+            {/* {!showAdd && user && !hasReview() ? <button onClick={toggleShowAdd}>add review</button> : ''}
            {showAdd && user && !hasReview() ?  <MakeRating 
                 user = {user}
                 game = {game}
@@ -47,13 +54,14 @@ const Game = ({game, user, onSubmit, editReview}) => {
                 game = {game}
                 editReview = {editReview}
                 toggleShowAdd = {toggleShowAdd}
-            /> : ''}
-            <hr></hr>
+            /> : ''} */}
+           
             
             
 
            
-        </>
+        </div>
+        </Link>
     )
 }
 

@@ -7,6 +7,8 @@ const UserLogin = ({setToken, token}) => {
     const [password, setPassword] = useState('')
 
     const onUserSubmit = (e) => {
+        console.log(password)
+        console.log(username)
         e.preventDefault();
         const toLogin = {
             Username : username,

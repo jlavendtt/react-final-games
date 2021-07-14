@@ -1,18 +1,17 @@
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import {Nav, Navbar, NavDropdown} from 'react-bootstrap'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
-import {Link} from 'react-router-dom'
-import {useState, useEffect, createContext} from 'react'
-import SignIn from './components/SignIn'
+import {useState, useEffect} from 'react'
 import Profile from './components/Profile'
 import Home from './components/Home'
-import Game from './components/Game';
 import SingleGame from './components/SingleGame';
 import SingleUser from './components/SingleUser';
 import UserRegister from './components/UserRegister';
 import UserLogin from './components/UserLogin';
 import React from 'react';
+import './App.css';
+import sprite from './download.png';
+
 
 const userContext = React.createContext('token');
 
@@ -36,25 +35,25 @@ function App() {
 
   const [searchTerm, setSearchTerm] = useState('')
 
-  // useEffect(() => {
+   useEffect(() => {
 
-  //   const getGames = async () => {
+     const getGames = async () => {
 
-  //     const gamesFromServer = await fetchGames();
-  //     setGames(gamesFromServer)
+       const gamesFromServer = await fetchGames();
+       setGames(gamesFromServer)
   //     const usersFromServer = await fetchUsers();
   //     setUsers(usersFromServer);
   //     const jesse = await fetchUser(1002)
   //     var today = new Date();
   //     console.log(today)
   //    setGlobalUser(jesse)
-  //   }
+     }
 
-  //   getGames()
-
+      getGames()
+    
     
 
-  // }, [])
+  }, [])
 
   const fetchUsers = async () => {
     const res = await fetch('https://localhost:44305/User')
@@ -79,9 +78,10 @@ function App() {
 }
 
   const fetchGames = async () => {
+    const parsed = JSON.parse(document.cookie);
     const res = await fetch('https://localhost:44305/Game',{
     headers: {
-     'Authorization': `Bearer ${document.cookie}`,
+     'Authorization': `Bearer ${parsed.token}`,
     }
   })
 
@@ -92,8 +92,11 @@ function App() {
 
   const searchForGames = (e) => {
 
+      
+
     e.preventDefault();
-    console.log("this was run right?")
+    console.log('was search for game called')
+    
      let found = games.filter((game)=> {
        if (searchTerm==="") {
          return false
@@ -301,7 +304,7 @@ function App() {
       <Navbar bg="dark" variant="dark"
         fixed="top">
         <Navbar.Brand>
-          Logo (Picture)
+        <img className="logo" src={sprite}></img>
         </Navbar.Brand>
         <Nav>
           
@@ -325,11 +328,12 @@ function App() {
             <NavDropdown.Item onClick={signOut}  >Signout</NavDropdown.Item>
           </NavDropdown>
           <Navbar.Brand>
-          Logo (Picture)
+          <img className="logo" src={sprite}></img>
         </Navbar.Brand>
       </Navbar>
       
       </Router>
+      
     </div>
     
     
