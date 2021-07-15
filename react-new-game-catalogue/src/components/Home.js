@@ -17,12 +17,35 @@ const fetchUser = async (name) => {
     return data;
   }
 
+  
 
-const Home = ({games, onSubmit, editReview}) => {
+
+const Home = ({games, onSubmit, editReview, allGames, searchTerm}) => {
 
     const [user, setUser] = useState(null)
 
+    const [foundGames, setFoundGames] = useState([])
+
     useEffect(() => {
+
+        const searchForGames = () => {
+
+      
+
+    
+    
+    
+            let found = allGames.filter((game)=> {
+              if (searchTerm==="") {
+                return false
+              }
+               if (game.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                 return true;
+               }
+            })
+            setFoundGames(found)
+            
+         }
         
         const xyz = async () => {
             if (document.cookie) {
@@ -37,6 +60,7 @@ const Home = ({games, onSubmit, editReview}) => {
 
         }
         xyz();
+        
 
     },[])
 

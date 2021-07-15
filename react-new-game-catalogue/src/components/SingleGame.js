@@ -122,6 +122,9 @@ import UserRating from './UserRating'
            <div>
          
          <br></br>
+         <br></br>
+         <br></br>
+         <br></br>
             <img className='img' style={{height: '180px', width: '200px', maxHeight: "250px"}}
       src={this.state.game.pic}
       alt="new"

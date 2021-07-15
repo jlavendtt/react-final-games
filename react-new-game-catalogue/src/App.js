@@ -126,7 +126,9 @@ function App() {
         }
      })
      setSearchedGames(found);
-     setSearchTerm('');
+     
+     setSearchTerm('')
+     
   }
 
   const editGame = async (edited) => {
@@ -318,6 +320,8 @@ function App() {
             user = {globalUser}
             onSubmit = {addRating}
             editReview = {editReview}
+            allGames = {games}
+            searchTerm = {searchTerm}
           />
           </>
         )}
@@ -334,8 +338,8 @@ function App() {
           <Nav.Link href="products"> Find Users </Nav.Link>
         </Nav>
         <Nav className = "nav-popular-spacing">
-          
-          <Nav.Link href="/home">Popular Games </Nav.Link>
+       
+        <Navbar.Brand><Nav.Link href="/home">Library </Nav.Link></Navbar.Brand>
         </Nav>
         <form className="searchSpacing"
         onSubmit={searchForGames}>
