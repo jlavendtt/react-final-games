@@ -1,15 +1,36 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import ReactStars from 'react-stars'
+import {useState, useEffect} from 'react'
+import userSprite from '../userSprite.png'
 
+const AddRating = ({game, user, addRating}) => {
 
-
-const UserRating = ({incomingStarted, incomingRating, incomingCompleted, incomingDescription}) => {
-
+    
     const [started, setStarted] = useState(false)
     const [rating, setRating] = useState(0)
     const [completed, setCompleted] = useState(false)
     const [description, setDescription] = useState('')
 
+    const ratingChanged = (newRating) => {
+        setRating(newRating)
+      }
+
+      const onUserSubmit = (e) => {
+        e.preventDefault();
+        const toAdd = {
+            GameId : game.id,
+            UserId : user.id,
+            Rating : rating,
+            Completed : completed,
+            Started : started,
+            Description : description
+        }
+        addRating(toAdd)
+        setStarted(false);
+        setRating(0)
+        setCompleted(false);
+        setDescription('')
+    }
 
     return (
         <div>
@@ -52,7 +73,8 @@ const UserRating = ({incomingStarted, incomingRating, incomingCompleted, incomin
 
              
         </div>
+        
     )
 }
 
-export default UserRating
+export default AddRating

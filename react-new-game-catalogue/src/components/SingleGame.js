@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import GameRatings from './GameRatings'
+import AddRating from './AddRating'
+
+
 
  class SingleGame extends Component {
    constructor(props) {
@@ -7,11 +10,29 @@ import GameRatings from './GameRatings'
      this.state = {
       url : window.location.href,
       game : [],
-      user : this.props.user    
+      user : this.props.user,
+      addRating : this.props.addRating,
+      hasReview : false,    
      }
    }
+   
 
    componentDidMount() {
+
+    const fetchUser = async (name) => {
+    
+      const parsed = JSON.parse(document.cookie);
+      
+      const res = await fetch(`https://localhost:44305/User/${name}`, {
+          headers: {
+              'Authorization': `Bearer ${parsed.token}`,
+             }
+      })
+  
+      const data = await res.json();
+      return data;
+    }
+
     let splitUrl = this.state.url.split('/')
     let id = splitUrl[splitUrl.length-1];
     
@@ -22,22 +43,47 @@ import GameRatings from './GameRatings'
             'Authorization': `Bearer ${parsed.token}`,
            }
         })
+
+        
     
         const data = await res.json();
-    
+        
         return data;
       }
+
+     
 
       const getGame = async () => {
 
         const gameFromServer = await fetchGame(id);
-        console.log(gameFromServer)
+        const  tokenUser = JSON.parse(document.cookie)
+        
+        const foundUser = await fetchUser(tokenUser.username);
+        
         this.setState({
-          game: gameFromServer
+          game: gameFromServer,
+          user: foundUser
         })
+        let gameNum = gameFromServer.id
+            for (let i = 0;i<foundUser.ratings.length;++i) {
+                let tempNum = this.state.user.ratings[i].gameId;
+                console.log(gameNum, tempNum)
+                if (gameNum==tempNum) {
+                  this.setState({
+                    hasReview: true
+                  })
+                }
+            }
+
       }
       getGame()
+      const findReview = () => {
+          
+        }
+        //findReview()
    }
+
+   
    
   render() {
 
@@ -49,16 +95,25 @@ import GameRatings from './GameRatings'
         <br></br>
         <br></br>
         <br></br>
+        
+         <p>{this.state.game ?<h1 style={{textAlign: 'center'}}>{this.state.game.name}</h1> : ''}</p>
        
-         {this.state.game ?<h1>{this.state.game.name}</h1> : ''}
+         {/* <GameRatings ratings = {this.state.game.ratings} user = {this.state.user}/> */}
+         {!this.state.hasReview ? <div style={{display : "flex", justifyContent: "center" }}>
+           <div>
+         
          <br></br>
             <img className='img'
       src={this.state.game.pic}
       alt="new"
       />
-         <h1>Picture of game and average score of game along with genres hopefully</h1>
-         <GameRatings ratings = {this.state.game.ratings} user = {this.state.user}/>
       </div>
+              <AddRating
+                game = {this.state.game}
+                user ={this.state.user}
+                addRating = {this.state.addRating}/>
+         </div> : '' }
+      </div> 
     )
   }
 }

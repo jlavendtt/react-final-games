@@ -55,7 +55,19 @@
 }
 .gameTitle {
   color: black;
+  font-display: block;
+  font-weight: bold;
   
+}
+
+.checkbox-hover{
+  width: 40px;
+  display:block;
+  text-align: center;
+}
+
+.addRating {
+  display: flex
 }
 
 .container {
@@ -69,9 +81,29 @@
 }
 
 .nav-profile-spacing {
-  margin-left: 250px;
+  margin-left: 275px;
 }
 
 .nav-popular-spacing {
-  margin-left: 150px;
+  margin-left: 230px;
+}
+
+.myClass{
+  width: 40px;
+  display:block;
+  text-align: center;
+}
+
+ul.categorychecklist {
+  list-style:none;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.make-rating-outer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }

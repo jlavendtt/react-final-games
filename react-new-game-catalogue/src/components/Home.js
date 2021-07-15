@@ -45,6 +45,7 @@ const Home = ({games, onSubmit, editReview}) => {
         <br></br>
         <br></br>
         <br></br>
+        <br></br>
         <Games 
             games = {games}
             user = {user}

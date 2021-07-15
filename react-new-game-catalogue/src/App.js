@@ -11,6 +11,8 @@ import UserLogin from './components/UserLogin';
 import React from 'react';
 import './App.css';
 import sprite from './download.png';
+import AddRating from './components/AddRating'
+import Rating from 'react-simple-star-rating'
 
 
 const userContext = React.createContext('token');
@@ -41,6 +43,10 @@ function App() {
 
        const gamesFromServer = await fetchGames();
        setGames(gamesFromServer)
+       const  tokenUser = JSON.parse(document.cookie)
+        
+        const foundUser = await fetchUser(tokenUser.username);
+        setGlobalUser(foundUser)
   //     const usersFromServer = await fetchUsers();
   //     setUsers(usersFromServer);
   //     const jesse = await fetchUser(1002)
@@ -60,6 +66,20 @@ function App() {
 
     const data = await res.json();
 
+    return data;
+  }
+
+  const fetchUser = async (name) => {
+    
+    const parsed = JSON.parse(document.cookie);
+    
+    const res = await fetch(`https://localhost:44305/User/${name}`, {
+        headers: {
+            'Authorization': `Bearer ${parsed.token}`,
+           }
+    })
+
+    const data = await res.json();
     return data;
   }
 
@@ -180,17 +200,18 @@ function App() {
   }
 
   const addRating = async (rating) => {
+    const parsed = JSON.parse(document.cookie);
     console.log(rating)
     const res = await fetch('https://localhost:44305/UserRating', {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
       },
       body: JSON.stringify(rating)
     });
     
     const data = await res.json();
-    reloadUser(user.id)
+    
   }
 
   
@@ -273,7 +294,9 @@ function App() {
         <SingleUser globalUser = {globalUser}/>
      </Route>
      <Route path="/game/:id">
-        <SingleGame user = {globalUser}/>
+        <SingleGame 
+        addRating = {addRating}
+        user = {globalUser}/>
      </Route>
       <Route path='/profile' 
         exact
@@ -304,7 +327,7 @@ function App() {
       <Navbar bg="dark" variant="dark"
         fixed="top">
         <Navbar.Brand>
-        <img className="logo" src={sprite}></img>
+        <img className="logo" style={{marginLeft:'20px'}} src={sprite}></img>
         </Navbar.Brand>
         <Nav>
           
@@ -333,6 +356,7 @@ function App() {
       </Navbar>
       
       </Router>
+      
       
     </div>
     
