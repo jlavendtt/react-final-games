@@ -3,7 +3,7 @@ import ReactStars from 'react-stars'
 import {useState, useEffect} from 'react'
 import userSprite from '../userSprite.png'
 
-const AddRating = ({game, user, addRating}) => {
+const AddRating = ({game, user, addRating, toggleReview}) => {
 
     
     const [started, setStarted] = useState(false)
@@ -30,6 +30,7 @@ const AddRating = ({game, user, addRating}) => {
         setRating(0)
         setCompleted(false);
         setDescription('')
+        toggleReview(toAdd)
     }
 
     return (
@@ -59,6 +60,7 @@ const AddRating = ({game, user, addRating}) => {
         onChange={ratingChanged}
         value = {rating}
         // edit = {false}
+        half = {false}
         size={24}
         color2={'#ffd700'} />
         

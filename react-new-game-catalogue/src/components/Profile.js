@@ -3,6 +3,7 @@ import ProfileView from './ProfileView'
 import UserRatings from './UserRatings'
 import {useState, useEffect, createContext} from 'react'
 import AddRating from './AddRating'
+import UserRating from './UserRating'
 
 const fetchUser = async (name) => {
     
@@ -44,18 +45,18 @@ const Profile = () => {
 
     
     return (
-        <div>
+        <>
             <br></br>
             <br></br>
             <br></br>
-            <h1>Profile</h1>
+            
             {!user ?<h1>Sign in first!</h1> : ''}
-            {user ? <h1>Welcome {user.username}!</h1> : ''}
-            <AddRating/>
+            {user ? <h1 style={{textAlign: 'center'}}>Welcome {user.username}!</h1> : ''}
+            
             {user && user.ratings ? <UserRatings user = {user}>/</UserRatings> : 'err'}
             
             
-        </div>
+        </>
     )
 }
 

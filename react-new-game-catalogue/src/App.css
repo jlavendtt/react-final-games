@@ -48,6 +48,10 @@
   text-decoration: none;
 }
 
+.comment {
+  background-image: linear-gradient(to top, #f5ebeb 0%, #faefef 100%);
+}
+
 .logo {
   border-radius: 50%;
   height: 50px;

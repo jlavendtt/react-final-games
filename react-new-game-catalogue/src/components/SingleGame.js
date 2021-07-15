@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import GameRatings from './GameRatings'
 import AddRating from './AddRating'
+import UserRating from './UserRating'
 
 
 
@@ -12,7 +13,10 @@ import AddRating from './AddRating'
       game : [],
       user : this.props.user,
       addRating : this.props.addRating,
-      hasReview : false,    
+      hasReview : false,
+      setHasReview : null,
+      curReview : null,
+      filteredReviews : null    
      }
    }
    
@@ -67,13 +71,28 @@ import AddRating from './AddRating'
         let gameNum = gameFromServer.id
             for (let i = 0;i<foundUser.ratings.length;++i) {
                 let tempNum = this.state.user.ratings[i].gameId;
-                console.log(gameNum, tempNum)
+                
                 if (gameNum==tempNum) {
                   this.setState({
-                    hasReview: true
+                    hasReview: true,
+                    curReview : this.state.user.ratings[i]
                   })
                 }
             }
+
+            const flipHasReview = (updatedReview) => {
+              console.log("it actually flipped")
+              console.log(updatedReview)
+              console.log('cur state before...' + this.state.curReview)
+              this.setState({
+                hasReview: true,
+                curReview : updatedReview
+              })
+              window.location.reload(true);
+            }
+            this.setState({
+              setHasReview: flipHasReview
+            })
 
       }
       getGame()
@@ -103,7 +122,7 @@ import AddRating from './AddRating'
            <div>
          
          <br></br>
-            <img className='img'
+            <img className='img' style={{height: '180px', width: '200px', maxHeight: "250px"}}
       src={this.state.game.pic}
       alt="new"
       />
@@ -111,6 +130,22 @@ import AddRating from './AddRating'
               <AddRating
                 game = {this.state.game}
                 user ={this.state.user}
+                toggleReview = {this.state.setHasReview}
+                addRating = {this.state.addRating}/>
+         </div> : '' }
+         {this.state.curReview ? <div style={{display : "flex", justifyContent: "center" }}>
+           <div>
+         
+         <br></br>
+            <img className='img' style={{height: '180px', width: '200px', maxHeight: "250px"}}
+      src={this.state.game.pic}
+      alt="new"
+      />
+      </div>
+              <UserRating
+                game = {this.state.game}
+                user ={this.state.user}
+                curReview = {this.state.curReview}
                 addRating = {this.state.addRating}/>
          </div> : '' }
       </div> 
