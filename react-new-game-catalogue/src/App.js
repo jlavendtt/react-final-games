@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import {Nav, Navbar, NavDropdown} from 'react-bootstrap'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import Profile from './components/Profile'
 import Home from './components/Home'
@@ -113,8 +113,10 @@ function App() {
   const searchForGames = (e) => {
 
       
-
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
+    
     console.log('was search for game called')
     
      let found = games.filter((game)=> {
@@ -322,13 +324,15 @@ function App() {
             editReview = {editReview}
             allGames = {games}
             searchTerm = {searchTerm}
+            clearSearchTerm = {setSearchTerm}
+            search = {searchForGames}
           />
           </>
         )}
       />
       
 
-      <Navbar bg="dark" variant="dark"
+      {document.cookie!=='' ?<Navbar bg="dark" variant="dark"
         fixed="top">
         <Navbar.Brand>
         <img className="logo" style={{marginLeft:'20px'}} src={sprite}></img>
@@ -344,7 +348,8 @@ function App() {
         <form className="searchSpacing"
         onSubmit={searchForGames}>
       <input className="searchWidth" value={searchTerm} onChange={event => {setSearchTerm(event.target.value)}} type="search" placeholder="Find Games" aria-label="Search"/>
-      <button className="btn btn-outline-success btn-spacing" type="submit">Search</button>
+      {window.location.href!=='http://localhost:3000/home' ? <Link to="/home"><button className="btn btn-outline-success btn-spacing" type="submit">Search</button></Link> : ''}
+      {window.location.href==='http://localhost:3000/home' ? <button className="btn btn-outline-success btn-spacing" type="submit">Search</button> : ''}
     </form>
     <NavDropdown className = "nav-profile-spacing" title="User Profile">
             <NavDropdown.Item href = "/profile">Profile</NavDropdown.Item>
@@ -357,7 +362,7 @@ function App() {
           <Navbar.Brand>
           <img className="logo" src={sprite}></img>
         </Navbar.Brand>
-      </Navbar>
+      </Navbar> : ''}
       
       </Router>
       

@@ -19,11 +19,79 @@ const fetchUser = async (name) => {
     return data;
   }
 
+  const fetchStarted = async (name) => {
+    
+    const parsed = JSON.parse(document.cookie);
+    
+    const res = await fetch(`https://localhost:44305/UserRating/Started`, {
+        headers: {
+            'Authorization': `Bearer ${parsed.token}`,
+           }
+    })
+
+    const data = await res.json();
+    return data;
+  }
+
+  const fetchNotStarted = async (name) => {
+    
+    const parsed = JSON.parse(document.cookie);
+    
+    const res = await fetch(`https://localhost:44305/UserRating/NotStarted`, {
+        headers: {
+            'Authorization': `Bearer ${parsed.token}`,
+           }
+    })
+
+    const data = await res.json();
+    return data;
+  }
+
+  const fetchCompleted = async (name) => {
+    
+    const parsed = JSON.parse(document.cookie);
+    
+    const res = await fetch(`https://localhost:44305/UserRating/Completed`, {
+        headers: {
+            'Authorization': `Bearer ${parsed.token}`,
+           }
+    })
+
+    const data = await res.json();
+    return data;
+  }
+
+
 
 const Profile = () => {
 
 
     const [user, setUser] = useState(null);
+    const [started, setStarted] = useState(null)
+    const [notStarted, setNotStarted] = useState(null)
+    const [completed, setCompleted] = useState(null)
+    const [seeStarted, setSeeStarted] = useState(false)
+    const [seeNotStarted, setSeeNotStarted] = useState(false)
+    const [seeCompleted, setSeeCompleted] = useState(false)
+
+    const toggleStarted = () => {
+        setSeeStarted(true);
+        setSeeNotStarted(false)
+        setSeeCompleted(false);
+    }
+
+    const toggleNotStarted = () => {
+        
+        setSeeNotStarted(true)
+        setSeeCompleted(false);
+        setSeeStarted(false);
+    }
+
+    const toggleCompleted = () => {
+        setSeeStarted(false);
+        setSeeNotStarted(false)
+        setSeeCompleted(true);
+    }
 
     useEffect(() => {
         
@@ -34,6 +102,18 @@ const Profile = () => {
         
                  const foundUser = await fetchUser(tokenUser.username);
                  setUser(foundUser) 
+                 const fulCompletedUser = await fetchUser(tokenUser.username);
+                 const completedUser = await fetchCompleted(tokenUser.username);
+                 fulCompletedUser.ratings = completedUser;
+                 setCompleted(fulCompletedUser) 
+                 const startedUser = await fetchStarted(tokenUser.username);
+                 const fullStartedUser = await fetchUser(tokenUser.username);
+                 fullStartedUser.ratings = startedUser;
+                 setStarted(fullStartedUser) 
+                 const notStartedUser = await fetchNotStarted(tokenUser.username);
+                 const fullNotStartedUser = await fetchUser(tokenUser.username);
+                 fullNotStartedUser.ratings = notStartedUser
+                 setNotStarted(fullNotStartedUser) 
             }
          
             
@@ -52,8 +132,14 @@ const Profile = () => {
             
             {!user ?<h1>Sign in first!</h1> : ''}
             {user ? <h1 style={{textAlign: 'center'}}>Welcome {user.username}!</h1> : ''}
+            <button onClick={toggleCompleted}>Completed</button>
+            <button onClick={toggleStarted}>Started</button>
+            <button onClick={toggleNotStarted}>Wishlist</button>
             
-            {user && user.ratings ? <UserRatings user = {user}>/</UserRatings> : 'err'}
+            {user && user.ratings && !seeCompleted && !seeNotStarted && !seeStarted ? <UserRatings user = {user}>/</UserRatings> : ''}
+            {completed && completed.ratings && seeCompleted ? <UserRatings user = {completed}>/</UserRatings> : ''}
+            {started && started.ratings && seeStarted ? <UserRatings user = {started}>/</UserRatings> : ''}
+            {notStarted && notStarted.ratings && seeNotStarted ? <UserRatings user = {notStarted}>/</UserRatings> : ''}
             
             
         </>

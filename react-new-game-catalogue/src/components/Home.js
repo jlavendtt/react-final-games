@@ -2,6 +2,7 @@ import React from 'react'
 import UserDisplay from './UserDisplay'
 import Games from './Games'
 import {useState, useEffect, createContext} from 'react'
+import { useLocation } from 'react-router-dom';
 
 const fetchUser = async (name) => {
     
@@ -20,62 +21,78 @@ const fetchUser = async (name) => {
   
 
 
-const Home = ({games, onSubmit, editReview, allGames, searchTerm}) => {
+const Home = ({games, onSubmit, editReview, allGames, searchTerm, clearSearchTerm, search}) => {
 
     const [user, setUser] = useState(null)
 
     const [foundGames, setFoundGames] = useState([])
 
+    const [randGames, setRandGames] = useState([])
+
+    const [location, setLocation] = useState([])
+
     useEffect(() => {
 
-        const searchForGames = () => {
+        
+        // const searchForGames = () => {
 
       
 
     
     
     
-            let found = allGames.filter((game)=> {
-              if (searchTerm==="") {
-                return false
-              }
-               if (game.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                 return true;
-               }
-            })
-            setFoundGames(found)
+        //     let found = allGames.filter((game)=> {
+        //       if (searchTerm==="") {
+        //         return false
+        //       }
+        //        if (game.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+        //          return true;
+        //        }
+        //     })
+        //     setFoundGames(found)
+        //     clearSearchTerm('')
             
-         }
+        //  }
         
-        const xyz = async () => {
-            if (document.cookie) {
+        // const xyz = async () => {
+        //     if (document.cookie) {
         
-                const  tokenUser = JSON.parse(document.cookie)
+        //         const  tokenUser = JSON.parse(document.cookie)
         
-                 const foundUser = await fetchUser(tokenUser.username);
-                 setUser(foundUser) 
-            }
+        //          const foundUser = await fetchUser(tokenUser.username);
+        //          setUser(foundUser) 
+        //     }
          
             
 
-        }
-        xyz();
-        
+        // }
+        // xyz();
+        // searchForGames();
+        search();
 
     },[])
 
     return (
         <>
+       
         <br></br>
         <br></br>
         <br></br>
         <br></br>
+        {/* <h1>{window.location.href}</h1> */}
         <Games 
             games = {games}
             user = {user}
             onSubmit = {onSubmit}
             editReview = {editReview}
         />
+        {games.length===0 ? <Games 
+            games = {allGames.slice(15,33)}
+            user = {user}
+            onSubmit = {onSubmit}
+            editReview = {editReview}
+        /> : ''}
+
         
         </>
     )
