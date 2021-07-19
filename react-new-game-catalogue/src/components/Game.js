@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import {Link} from 'react-router-dom'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import SingleGame from './SingleGame'
-
+import '../Game.css'
 
 
 

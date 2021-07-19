@@ -72,7 +72,7 @@ const UserLogin = ({setToken, token}) => {
       <input class="pass" type="password" align="center" placeholder="Password"
        value={password} onChange={(e) => setPassword(e.target.value)}/>
         <input style={{marginLeft:"170px"}}  type = 'submit' value ='Signin'></input>
-      <p class="forgot" align="center"><a href="#">Forgot Password?/</a></p>
+      
         </form>
                 
     </div>

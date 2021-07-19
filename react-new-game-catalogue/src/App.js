@@ -13,7 +13,7 @@ import './App.css';
 import sprite from './download.png';
 import AddRating from './components/AddRating'
 import Rating from 'react-simple-star-rating'
-
+import Landing from './components/Landing'
 
 const userContext = React.createContext('token');
 
@@ -210,11 +210,13 @@ function App() {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
+        'Authorization': `Bearer ${parsed.token}`,
       },
       body: JSON.stringify(rating)
     });
     
     const data = await res.json();
+    console.log(data)
     
   }
 
@@ -363,7 +365,7 @@ function App() {
           <img className="logo" src={sprite}></img>
         </Navbar.Brand>
       </Navbar> : ''}
-      
+      <Landing/>
       </Router>
       
       

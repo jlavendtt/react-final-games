@@ -1,5 +1,6 @@
 import React from 'react'
 import Game from './Game'
+import '../Games.css'
 
 const Games = ({games, user, onSubmit, editReview}) => {
     return (
