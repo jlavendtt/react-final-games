@@ -6,6 +6,13 @@ import present from '../present.jpg'
 import hourglass from '../hourglass.jpg'
 import checkmark from '../checkmark.jpg'
 const Landing = () => {
+
+    const goToSignin = () => {
+        window.location.replace("/login");
+    }
+    const goToRegister = () => {
+        window.location.replace("/register");
+    }
     return (
         <body>
             
@@ -16,15 +23,14 @@ const Landing = () => {
                        <img className="img-fluid"  src={nes} alt=""/>
                        </div>
                        <div style={{width:"33%"}}>
-                           <h1>Welcome to the  
-                               <span className="text-warning"> Become Developer</span> 
+                           <h1> 
+                               <span className="text-warning"> Games Catalogue</span> 
                             </h1>
-                            <p className="lead my-4">This is the first time i've ever done this currently i'm just typing
-                                 is text filling. Someone recommended 
+                            <p className="lead my-4">Browse through hundreds of games and track the ratings and progress of games you've played or might play one day!
                             </p>
-                            <button style={{marginRight:"200px"}} className="btn btn-primary btn-lg my-4">Register</button>
+                            <button onClick={goToRegister} style={{marginRight:"200px"}} className="btn btn-primary btn-lg my-4">Register</button>
                             
-                            <button style={{marginLeft:"20px"}} className="btn btn-primary btn-lg my-4">Sign in</button>
+                             <button onClick={goToSignin} style={{marginLeft:"20px"}} className="btn btn-primary btn-lg my-4">Sign in</button>
                        </div >
                        <div style={{width:"33%"}}>
                        <img className="img-fluid"  src={consoles} alt=""/>
@@ -37,16 +43,16 @@ const Landing = () => {
           
            <div class="newRow">
   <div className="newColumn bg-dark text-light p-5 text-center" style={{marginLeft:"3.0%"}} >
-     <img className="img"  src={hourglass} alt=""/>
-     <p className="lead my-4">Add to a list of games you have yet to beat!</p>
+     <img className="img"  src={present} alt=""/>
+     <p className="lead my-4">Add to a list of games you have yet to play!</p>
   </div>
   <div className="newColumn bg-dark text-light p-5 text-center">
-    <img className="img"  src={present} alt=""/>
+    <img className="img"  src={hourglass} alt=""/>
     <p className="lead my-4">Add to a list of games you have yet to beat!</p>
   </div>
   <div className="newColumn bg-dark text-light p-5 text-center">
     <img className="img"  src={checkmark} alt=""/>
-    <p className="lead my-4">Add to a list of games you have yet to beat!</p>
+    <p className="lead my-4">Add to a list of games you have already conqured!</p>
   </div>
 </div>
         </body>

@@ -87,6 +87,7 @@ function App() {
     document.cookie += '; Max-Age=0'
     console.log('signout called')
     console.log(document.cookie)
+    window.location.replace("/");
   }
 
 
@@ -365,7 +366,7 @@ function App() {
           <img className="logo" src={sprite}></img>
         </Navbar.Brand>
       </Navbar> : ''}
-      <Landing/>
+      {document.cookie===''&& window.location.href==='http://localhost:3000/' ? <Landing/> : ''}
       </Router>
       
       
